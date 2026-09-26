@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
-import { EASE_OUT, useReducedMotion } from "../lib/hooks";
+import { EASE_OUT, intro, useReducedMotion } from "../lib/hooks";
 
 type RevealProps = { children: ReactNode; className?: string; delay?: number; as?: "div" | "section" | "header" };
 
@@ -11,7 +11,7 @@ export function Reveal({ children, className, delay = 0, as = "div", ...rest }: 
   return (
     <Tag
       className={className}
-      initial={reduced ? false : { opacity: 0, y: 10, filter: "blur(6px)" }}
+      initial={reduced || intro.played ? false : { opacity: 0, y: 10, filter: "blur(6px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
       viewport={{ once: true, margin: "0px 0px -8% 0px" }}
       transition={{ duration: 0.7, delay, ease: EASE_OUT }}

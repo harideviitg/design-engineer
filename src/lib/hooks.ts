@@ -19,6 +19,15 @@ export function useMediaQuery(query: string) {
 }
 
 export const useFinePointer = () => useMediaQuery("(hover: hover) and (pointer: fine)");
+/** Rulers, the inspector and keyboard hints are a mouse-and-keyboard thing. */
+export const useTools = () => {
+  const fine = useFinePointer();
+  const wide = useMediaQuery("(min-width: 768px)");
+  return fine && wide;
+};
+
+/** Flips once the first page has mounted, so returning to a page doesn't replay its intro. */
+export const intro = { played: false };
 export const useReducedMotion = () => useMediaQuery("(prefers-reduced-motion: reduce)");
 
 /** A Date that ticks on the second boundary. */

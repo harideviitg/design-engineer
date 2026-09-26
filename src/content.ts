@@ -23,13 +23,6 @@ export const site = {
     { title: "Lintel", description: "Design QA plugin for Figma", year: "2024", href: "#", tone: "#9747ff" },
   ],
 
-  writing: [
-    { title: "The 1px nobody asked about", date: "Sep 2026", href: "#" },
-    { title: "Easing is a design decision", date: "Jul 2026", href: "#" },
-    { title: "Notes on optical alignment", date: "May 2026", href: "#" },
-    { title: "Designing with springs", date: "Feb 2026", href: "#" },
-  ],
-
   experience: [
     { period: "2025 — Now", company: "Acme", role: "Design Engineer" },
     { period: "2023 — 25", company: "Studio", role: "Product Designer" },

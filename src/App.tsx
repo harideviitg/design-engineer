@@ -1,25 +1,37 @@
-import { useRef } from "react";
+import { motion } from "motion/react";
+import { useEffect, useRef } from "react";
 import { site } from "./content";
-import { CopyEmail } from "./components/CopyEmail";
 import { Inspector } from "./components/Inspector";
-import { LabGrid } from "./components/Lab";
-import { ExperienceList, LinkRow, WorkList, WritingList } from "./components/Lists";
-import { Avatar } from "./components/Avatar";
-import { LocalTime } from "./components/LocalTime";
+import { Kbd } from "./components/Kbd";
 import { Rulers } from "./components/Rulers";
-import { Reveal, Rich, Section } from "./components/Section";
-import { ThemeToggle } from "./components/ThemeToggle";
-import { useFinePointer, useMediaQuery } from "./lib/hooks";
+import { intro, useTools } from "./lib/hooks";
 import { useMeasureTracking } from "./lib/measure";
+import { routeKey, useRoute, useScrollMemory } from "./lib/router";
+import { getNote } from "./notes";
+import { Home } from "./pages/Home";
+import { NotePage } from "./pages/NotePage";
+import { NotesIndex } from "./pages/NotesIndex";
 
 const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 
 export default function App() {
   const columnRef = useRef<HTMLDivElement>(null);
-  const fine = useFinePointer();
-  const wide = useMediaQuery("(min-width: 768px)");
-  const tools = fine && wide; // rulers + inspector are a mouse-and-keyboard thing
+  const tools = useTools();
+  const route = useRoute();
+  const key = routeKey(route);
   useMeasureTracking(tools);
+  useScrollMemory(key);
+
+  useEffect(() => {
+    intro.played = true;
+  }, []);
+
+  useEffect(() => {
+    const base = `${site.name} — ${site.role}`;
+    if (route.name === "notes") document.title = `Notes — ${site.name}`;
+    else if (route.name === "note") document.title = `${getNote(route.slug)?.title ?? "Note"} — ${site.name}`;
+    else document.title = base;
+  }, [route]);
 
   return (
     <>
@@ -28,58 +40,16 @@ export default function App() {
 
       <main className="px-5 pb-16 pt-16 md:px-10 md:pb-24 md:pt-32">
         <div ref={columnRef} className="relative mx-auto w-full max-w-[640px]">
-          <header className="relative grid grid-cols-1 gap-5 md:grid-cols-[128px_minmax(0,1fr)] md:items-center md:gap-x-8">
-            <Avatar width={site.avatar.width} alt={site.avatar.alt} />
-            <Reveal delay={0.25} className="flex flex-col">
-              <h1 data-measure="text" className="w-fit font-medium text-fg">
-                {site.name}
-              </h1>
-              <p data-measure="text" className="w-fit text-fg-2">
-                {site.role}
-              </p>
-              <p className="mt-1 text-[13px] leading-5 text-fg-3">
-                <LocalTime timeZone={site.location.timeZone} tz={site.location.tz} label={site.location.label} />
-              </p>
-            </Reveal>
-            <div className="absolute right-0 top-0">
-              <ThemeToggle />
-            </div>
-          </header>
-
-          <div className="mt-16 flex flex-col gap-14 md:mt-20 md:gap-16">
-            <Section label="Now" delay={0.45}>
-              <div className="space-y-3 text-fg-2">
-                {site.intro.map((p) => (
-                  <p key={p} data-measure="text">
-                    <Rich text={p} />
-                  </p>
-                ))}
-              </div>
-            </Section>
-
-            <Section label="Work" delay={0.55}>
-              <WorkList items={site.work} columnRef={columnRef} />
-            </Section>
-
-            <Section label="Lab" align="start">
-              <LabGrid />
-            </Section>
-
-            <Section label="Writing">
-              <WritingList items={site.writing} />
-            </Section>
-
-            <Section label="Experience">
-              <ExperienceList items={site.experience} />
-            </Section>
-
-            <Section label="Contact">
-              <div className="space-y-2">
-                <CopyEmail email={site.email} />
-                <LinkRow links={site.links} />
-              </div>
-            </Section>
-          </div>
+          <motion.div
+            key={key}
+            initial={intro.played ? { opacity: 0 } : false}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+          >
+            {route.name === "home" && <Home columnRef={columnRef} />}
+            {route.name === "notes" && <NotesIndex />}
+            {route.name === "note" && <NotePage slug={route.slug} />}
+          </motion.div>
 
           <footer className="mt-24 flex flex-col gap-2 border-t border-line pt-5 text-[13px] leading-5 text-fg-3 md:flex-row md:items-center md:justify-between">
             <span>
@@ -94,13 +64,5 @@ export default function App() {
         </div>
       </main>
     </>
-  );
-}
-
-function Kbd({ children }: { children: React.ReactNode }) {
-  return (
-    <kbd className="inline-grid h-[18px] min-w-[18px] place-items-center rounded-[4px] border border-line-2 px-1 font-sans text-[11px] font-medium leading-none text-fg-2">
-      {children}
-    </kbd>
   );
 }

@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import raw from "../assets/avatar.svg?raw";
 import { BinarySim, buildCells, type Palette } from "../lib/binary";
-import { useFinePointer, useReducedMotion } from "../lib/hooks";
+import { intro, useFinePointer, useReducedMotion } from "../lib/hooks";
 
 // Inlined so the ink can follow the theme (black on light, see --avatar-ink).
 const svg = raw.replace("<svg ", '<svg aria-hidden="true" focusable="false" ');
@@ -103,7 +103,7 @@ export function Avatar({ width, alt }: { width: number; alt: string }) {
       data-measure
       className="relative text-[var(--avatar-ink)]"
       style={{ width, height }}
-      initial={reduced ? false : { opacity: 0 }}
+      initial={reduced || intro.played ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
     >

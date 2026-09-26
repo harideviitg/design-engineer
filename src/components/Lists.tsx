@@ -3,6 +3,8 @@ import { useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { EASE_OUT, useFinePointer, useMediaQuery } from "../lib/hooks";
 import { isMeasuring, useMeasure } from "../lib/measure";
+import { paths } from "../lib/router";
+import { formatDate, type Note } from "../notes";
 import { Icon } from "./icons";
 
 /** The shared hover plate that glides from row to row. */
@@ -153,25 +155,28 @@ function Thumb({ tone }: { tone: string }) {
   );
 }
 
-export function WritingList({ items }: { items: { title: string; date: string; href: string }[] }) {
-  const [active, setActive] = useState<number | null>(null);
+export function NotesList({ items, showCategory = false }: { items: Note[]; showCategory?: boolean }) {
+  const [active, setActive] = useState<string | null>(null);
   const id = useId();
   return (
     <div className="-mx-3" onPointerLeave={() => setActive(null)}>
-      {items.map((it, i) => (
+      {items.map((it) => (
         <a
-          key={it.title}
-          href={it.href}
-          onPointerEnter={() => setActive(i)}
-          onFocus={() => setActive(i)}
+          key={it.slug}
+          href={paths.note(it.slug)}
+          onPointerEnter={() => setActive(it.slug)}
+          onFocus={() => setActive(it.slug)}
           onBlur={() => setActive(null)}
           data-measure
           className="group relative flex items-baseline gap-4 rounded-lg px-3 py-2"
         >
-          <Highlight show={active === i} id={id} />
-          <span className="relative text-fg">{it.title}</span>
+          <Highlight show={active === it.slug} id={id} />
+          <span className="relative min-w-0">
+            <span className="text-fg">{it.title}</span>
+            {showCategory && <span className="text-fg-2"> {it.category}</span>}
+          </span>
           <span className="relative ml-auto shrink-0 text-[13px] leading-4 tabular-nums text-fg-3">
-            {it.date}
+            {formatDate(it.date, "short")}
           </span>
         </a>
       ))}
