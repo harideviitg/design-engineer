@@ -21,7 +21,7 @@
   --bg: #fbfbfa;
   --bg-2: #f3f3f1;
   --fg: #171716;
-  --fg-2: #5f5f5a;
+  --fg-2: #6b6b66; /* body copy: a step below --fg so links and bold read as emphasis */
   --fg-3: #8a8a84;
   --line: #ebebe7;
   --line-2: #d9d9d4;
@@ -56,7 +56,7 @@
   --bg: #111110;
   --bg-2: #181817;
   --fg: #ededeb;
-  --fg-2: #c6c6c6;
+  --fg-2: #abaaa7;
   --fg-3: #6f6f6a;
   --line: #222221;
   --line-2: #33332f;

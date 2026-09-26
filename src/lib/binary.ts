@@ -8,6 +8,9 @@
 // The SVG is rasterised with its ink swapped for this sentinel so the live theme colour
 // can be painted in later (and blend along with the page).
 const INK_SENTINEL = "rgb(1 2 3)";
+// The art's other two colours (see src/assets/avatar.svg): the white face and the light skin tone.
+const WHITE = "rgb(255 255 255)";
+const SKIN = "rgb(235 235 233)";
 
 export type Cells = {
   n: number;
@@ -20,7 +23,7 @@ export type Cells = {
 };
 
 export async function buildCells(svgText: string, cols: number, rows: number): Promise<Cells> {
-  const S = 8;
+  const S = 8; // raster oversample per cell
   const sized = svgText
     .replaceAll("currentColor", "#010203")
     .replace(/^<svg\s+width="[^"]*"\s+height="[^"]*"/, `<svg width="${cols * S}" height="${rows * S}" preserveAspectRatio="none"`);
@@ -40,15 +43,37 @@ export async function buildCells(svgText: string, cols: number, rows: number): P
     const cj: number[] = [];
     const color: string[] = [];
     const isInk: number[] = [];
+
+    // Different browsers rasterise the SVG a touch differently, so one sample per pixel can come
+    // back slightly off (a near-black that isn't quite the ink marker). Instead: read five points,
+    // let them vote, and snap the winner to one of the art's three colours.
+    const points: [number, number][] = [
+      [0.5, 0.5],
+      [0.25, 0.25],
+      [0.75, 0.25],
+      [0.25, 0.75],
+      [0.75, 0.75],
+    ];
+    const classify = (r: number, g: number, b: number): 0 | 1 | 2 => {
+      if (Math.max(r, g, b) < 100) return 0; // ink (dark)
+      return Math.min(r, g, b) >= 245 ? 2 : 1; // white : skin
+    };
     for (let j = 0; j < rows; j++)
       for (let i = 0; i < cols; i++) {
-        const o = ((j * S + S / 2) * c.width + (i * S + S / 2)) * 4;
-        if (px[o + 3] < 128) continue;
-        const key = `rgb(${px[o]} ${px[o + 1]} ${px[o + 2]})`;
+        const votes = [0, 0, 0];
+        let solid = 0;
+        for (const [fx, fy] of points) {
+          const o = ((Math.floor((j + fy) * S) * c.width) + Math.floor((i + fx) * S)) * 4;
+          if (px[o + 3] < 128) continue;
+          solid++;
+          votes[classify(px[o], px[o + 1], px[o + 2])]++;
+        }
+        if (solid < 3) continue; // mostly empty: not part of the art
+        const kind = votes.indexOf(Math.max(...votes));
         ci.push(i);
         cj.push(j);
-        color.push(key);
-        isInk.push(key === INK_SENTINEL ? 1 : 0);
+        color.push(kind === 0 ? INK_SENTINEL : kind === 2 ? WHITE : SKIN);
+        isInk.push(kind === 0 ? 1 : 0);
       }
     return { n: ci.length, cols, rows, ci: Uint16Array.from(ci), cj: Uint16Array.from(cj), color, isInk: Uint8Array.from(isInk) };
   } finally {
