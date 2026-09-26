@@ -26,8 +26,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const base = `${site.name} — ${site.role}`;
-    if (route.name === "note") document.title = `${getNote(route.slug)?.title ?? "Note"} — ${site.name}`;
+    const base = `${site.name} ${site.role}`.toLowerCase(); // "haridev design engineer"
+    if (route.name === "note") document.title = `${getNote(route.slug)?.title ?? "Note"} · ${base}`;
     else document.title = base;
   }, [route]);
 
