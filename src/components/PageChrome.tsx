@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import { EASE_OUT, useReducedMotion, useTools } from "../lib/hooks";
 import { useEscapeTo } from "../lib/router";
 import { Icon } from "./icons";
-import { Kbd } from "./Kbd";
 import { ThemeToggle } from "./ThemeToggle";
 
-/** Back pill on the left, theme toggle on the right. Esc also goes back. */
+/** A quiet back arrow (with the Esc hint on desktop) on the left, theme toggle on the right. */
 export function TopBar({ backTo, backLabel }: { backTo: string; backLabel: string }) {
   const tools = useTools();
   useEscapeTo(backTo);
@@ -14,16 +13,16 @@ export function TopBar({ backTo, backLabel }: { backTo: string; backLabel: strin
     <div className="mb-12 flex items-center justify-between md:mb-16">
       <a
         href={backTo}
+        aria-label={`Back to ${backLabel}`}
         data-measure
-        className="group inline-flex h-8 items-center gap-2 rounded-full border border-line pl-2.5 pr-3 text-[13px] text-fg-2 transition-[background-color,color,transform] duration-150 ease-out hover:bg-bg-2 hover:text-fg active:scale-[0.97]"
+        className="group -ml-2 inline-flex h-8 items-center gap-2 rounded-md px-2 text-fg-3 transition-colors duration-150 ease-out hover:text-fg"
       >
         <Icon
           name="arrowLeft"
           size={14}
           className="transition-transform duration-200 ease-out group-hover:-translate-x-0.5"
         />
-        {backLabel}
-        {tools && <Kbd>Esc</Kbd>}
+        {tools && <span className="font-mono text-[12px] uppercase leading-4">Esc</span>}
       </a>
       <ThemeToggle />
     </div>
