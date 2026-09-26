@@ -179,14 +179,13 @@ function StretchToggle() {
 
 function TickSlider() {
   const MAX = 40;
-  const [value, setValue] = useState(24);
-  const [drag, setDrag] = useState<number | null>(null);
+  const [pos, setPos] = useState(24);
   const track = useRef<HTMLDivElement>(null);
-  const pos = drag ?? value;
 
-  const fromEvent = (e: React.PointerEvent) => {
+  // No grabbing: the value simply follows the cursor while it's over the slider.
+  const follow = (e: React.PointerEvent) => {
     const r = track.current!.getBoundingClientRect();
-    return Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * MAX;
+    setPos(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * MAX);
   };
 
   return (
@@ -195,33 +194,27 @@ function TickSlider() {
         {Math.round(pos)}
         <span className="text-fg-3">px</span>
       </div>
+      {/* the hover area is taller than the ticks, so the value doesn't drop out at the edges */}
       <div
-        ref={track}
         role="slider"
         tabIndex={0}
         aria-label="Spacing"
         aria-valuemin={0}
         aria-valuemax={MAX}
-        aria-valuenow={value}
-        onPointerDown={(e) => {
-          e.currentTarget.setPointerCapture(e.pointerId);
-          setDrag(fromEvent(e));
-        }}
-        onPointerMove={(e) => drag !== null && setDrag(fromEvent(e))}
-        onPointerUp={() => {
-          if (drag === null) return;
-          setValue(Math.round(drag));
-          setDrag(null);
-        }}
+        aria-valuenow={Math.round(pos)}
+        onPointerEnter={follow}
+        onPointerMove={follow}
+        onPointerDown={follow}
         onKeyDown={(e) => {
           const step = e.shiftKey ? 10 : 1;
-          if (e.key === "ArrowRight" || e.key === "ArrowUp") setValue((v) => Math.min(MAX, v + step));
-          else if (e.key === "ArrowLeft" || e.key === "ArrowDown") setValue((v) => Math.max(0, v - step));
+          if (e.key === "ArrowRight" || e.key === "ArrowUp") setPos((v) => Math.min(MAX, Math.round(v) + step));
+          else if (e.key === "ArrowLeft" || e.key === "ArrowDown") setPos((v) => Math.max(0, Math.round(v) - step));
           else return;
           e.preventDefault();
         }}
-        className="relative flex h-9 w-full cursor-ew-resize touch-none items-end justify-between rounded-sm"
+        className="-my-5 w-full touch-none rounded-sm py-5"
       >
+      <div ref={track} className="relative flex h-9 w-full items-end justify-between">
         {Array.from({ length: MAX + 1 }, (_, i) => {
           const d = i - pos;
           const swell = Math.exp(-(d * d) / 5);
@@ -232,11 +225,12 @@ function TickSlider() {
               className={`w-px rounded-full ${current ? "bg-accent" : i % 10 === 0 ? "bg-fg-2" : "bg-fg-3/60"}`}
               style={{
                 height: 6 + 18 * swell + (i % 10 === 0 ? 4 : 0),
-                transition: drag === null ? "height 220ms cubic-bezier(0.23, 1, 0.32, 1)" : "none",
+                transition: "height 160ms cubic-bezier(0.23, 1, 0.32, 1)",
               }}
             />
           );
         })}
+      </div>
       </div>
     </div>
   );
