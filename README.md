@@ -24,8 +24,6 @@ it's still full of placeholder copy for now (fake projects, fake writing, fake j
 - canvas for the rulers and the avatar hover, no library
 - Geist for text, Geist Mono for the small uppercase labels, both from Google Fonts
 
-the theme blend uses typed CSS custom properties (@property), from this write up by Jon Shamir: https://jonshamir.com/writing/color-mode/
-
 the avatar is exported straight from Figma as an SVG. i removed the background and made the ink follow the theme, but the art itself is untouched.
 
 ## where things are
