@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Theme colours are typed, so the browser blends them instead of swapping them.
+   Technique: https://jonshamir.com/writing/color-mode/ */
+@property --bg { syntax: "<color>"; inherits: true; initial-value: #fbfbfa; }
+@property --bg-2 { syntax: "<color>"; inherits: true; initial-value: #f3f3f1; }
+@property --fg { syntax: "<color>"; inherits: true; initial-value: #171716; }
+@property --fg-2 { syntax: "<color>"; inherits: true; initial-value: #5f5f5a; }
+@property --fg-3 { syntax: "<color>"; inherits: true; initial-value: #8a8a84; }
+@property --line { syntax: "<color>"; inherits: true; initial-value: #ebebe7; }
+@property --line-2 { syntax: "<color>"; inherits: true; initial-value: #d9d9d4; }
+@property --accent-soft { syntax: "<color>"; inherits: true; initial-value: #0d99ff1f; }
+@property --red { syntax: "<color>"; inherits: true; initial-value: #f24822; }
+@property --ruler-bg { syntax: "<color>"; inherits: true; initial-value: #fbfbfa; }
+@property --ruler-tick { syntax: "<color>"; inherits: true; initial-value: #cfcfca; }
+@property --avatar-ink { syntax: "<color>"; inherits: true; initial-value: #000; }
+
+:root {
+  --bg: #fbfbfa;
+  --bg-2: #f3f3f1;
+  --fg: #171716;
+  --fg-2: #5f5f5a;
+  --fg-3: #8a8a84;
+  --line: #ebebe7;
+  --line-2: #d9d9d4;
+  --accent: #0d99ff; /* Figma selection blue */
+  --accent-soft: rgb(13 153 255 / 0.12);
+  --red: #f24822; /* Figma redline */
+  --ruler-bg: #fbfbfa;
+  --ruler-tick: #cfcfca;
+  --avatar-ink: #000;
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    transition:
+      --bg 380ms ease,
+      --bg-2 380ms ease,
+      --fg 380ms ease,
+      --fg-2 380ms ease,
+      --fg-3 380ms ease,
+      --line 380ms ease,
+      --line-2 380ms ease,
+      --accent-soft 380ms ease,
+      --red 380ms ease,
+      --ruler-bg 380ms ease,
+      --ruler-tick 380ms ease,
+      --avatar-ink 380ms ease;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #111110;
+  --bg-2: #181817;
+  --fg: #ededeb;
+  --fg-2: #c6c6c6;
+  --fg-3: #6f6f6a;
+  --line: #222221;
+  --line-2: #33332f;
+  --accent: #0d99ff;
+  --accent-soft: rgb(13 153 255 / 0.16);
+  --red: #ff5a36;
+  --ruler-bg: #111110;
+  --ruler-tick: #3a3a37;
+  --avatar-ink: #232321; /* black would vanish into the page */
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-accent: var(--accent);
+  --color-red: var(--red);
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    font-synthesis: none;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+  :focus-visible {
+    outline: 1.5px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  button {
+    cursor: pointer;
+  }
+}
+
+/* Underlined links that firm up on hover */
+.link {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-2);
+  transition:
+    text-decoration-color 150ms var(--ease-out),
+    color 150ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    color: var(--fg);
+    text-decoration-color: currentColor;
+  }
+}
+
+/* Measure mode */
+html.measuring,
+html.measuring * {
+  cursor: crosshair !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ruler-in-x {
+    animation: ruler-in-x 700ms var(--ease-out) 250ms both;
+  }
+  .ruler-in-y {
+    animation: ruler-in-y 700ms var(--ease-out) 250ms both;
+  }
+}
+@keyframes ruler-in-x {
+  from {
+    transform: translateY(-100%);
+  }
+}
+@keyframes ruler-in-y {
+  from {
+    transform: translateX(-100%);
+  }
+}
