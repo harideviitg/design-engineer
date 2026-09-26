@@ -117,11 +117,6 @@ export const categories = ["All", ...Array.from(new Set(sortedNotes.map((n) => n
 
 export const getNote = (slug: string) => sortedNotes.find((n) => n.slug === slug);
 
-export function neighbours(slug: string) {
-  const i = sortedNotes.findIndex((n) => n.slug === slug);
-  return { newer: i > 0 ? sortedNotes[i - 1] : null, older: i >= 0 && i < sortedNotes.length - 1 ? sortedNotes[i + 1] : null };
-}
-
 export const slugify = (s: string) =>
   s
     .toLowerCase()

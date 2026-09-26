@@ -2,7 +2,7 @@ import { Icon } from "../components/icons";
 import { BackToTop, TopBar } from "../components/PageChrome";
 import { Prose } from "../components/Prose";
 import { paths } from "../lib/router";
-import { formatDate, getNote, neighbours, readingMinutes, type Note } from "../notes";
+import { formatDate, getNote, readingMinutes, type Note } from "../notes";
 
 export function NotePage({ slug }: { slug: string }) {
   const note = getNote(slug);
@@ -22,8 +22,6 @@ function Missing() {
 }
 
 function Article({ note }: { note: Note }) {
-  const { newer, older } = neighbours(note.slug);
-
   return (
     <>
       <TopBar backTo={paths.notes} backLabel="Notes" />
@@ -46,14 +44,10 @@ function Article({ note }: { note: Note }) {
 
           <Prose blocks={note.body} />
 
-          <nav aria-label="More notes" className="mt-20 grid gap-3 sm:grid-cols-2">
-            {newer ? <Neighbour note={newer} label="Newer" /> : <span className="hidden sm:block" />}
-            {older && <Neighbour note={older} label="Older" />}
-          </nav>
           <a
             href={paths.notes}
             data-measure="text"
-            className="group mt-5 inline-flex items-center gap-1.5 text-[13px] text-fg-3 transition-colors duration-150 hover:text-fg"
+            className="group mt-16 inline-flex items-center gap-1.5 text-[13px] text-fg-3 transition-colors duration-150 hover:text-fg"
           >
             <Icon name="arrowLeft" size={13} className="transition-transform duration-200 group-hover:-translate-x-0.5" />
             All notes
@@ -63,19 +57,5 @@ function Article({ note }: { note: Note }) {
 
       <BackToTop />
     </>
-  );
-}
-
-function Neighbour({ note, label }: { note: Note; label: string }) {
-  return (
-    <a
-      href={paths.note(note.slug)}
-      data-measure
-      className="group rounded-xl border border-line p-4 transition-[background-color,transform] duration-150 ease-out hover:bg-bg-2 active:scale-[0.99]"
-    >
-      <span className="font-mono text-[12px] uppercase leading-4 text-fg-3">{label}</span>
-      <span className="mt-1.5 block text-fg">{note.title}</span>
-      <span className="mt-0.5 block text-[13px] text-fg-3">{formatDate(note.date)}</span>
-    </a>
   );
 }

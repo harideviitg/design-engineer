@@ -11,7 +11,7 @@ it's still full of placeholder copy for now (fake projects, fake writing, fake j
 - my avatar is my own pixel art. hover it and a small spot around the cursor turns into 0s and 1s depending on the colour of each pixel (dark is 1, light is 0). move away and it goes back exactly to the original
 - light and dark mode. it follows your device by default, and the toggle blends the colours instead of snapping
 - the Work list has a hover highlight that glides between rows, and a preview card on wide screens
-- a Notes section for my writing, with its own list page and a page for every note. layout is borrowed from how emilkowal.ski and chloemaillot.fr do theirs, but built my way: a quiet back arrow (Esc works too), category filters, and newer/older links at the end. going back puts you exactly where you were on the page before
+- a Notes section for my writing, with its own list page and a page for every note. layout is borrowed from how emilkowal.ski and chloemaillot.fr do theirs, but built my way: a quiet back arrow (Esc works too) and category filters. going back puts you exactly where you were on the page before
 - a Lab section with a few small components (hold to confirm, copy button, stretch toggle, tick slider) that i'll keep adding to
 - click to copy email, a live clock with the time difference from you on hover
 
