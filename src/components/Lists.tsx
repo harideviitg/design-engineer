@@ -173,7 +173,7 @@ export function NotesList({ items }: { items: Note[] }) {
           <Highlight show={active === it.slug} id={id} />
           <span className="relative min-w-0 text-fg">{it.title}</span>
           <span className="relative ml-auto shrink-0 text-[13px] leading-4 tabular-nums text-fg-3">
-            {formatDate(it.date, "short")}
+            {formatDate(it.date)}
           </span>
         </a>
       ))}

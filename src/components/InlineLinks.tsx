@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { EASE_OUT } from "../lib/hooks";
-import { Icon, LinkedInIcon } from "./icons";
+import { Icon } from "./icons";
 
 /** A small dark chip that pops up above a word, in the same style as the clock tooltip. */
 function Chip({ children, id }: { children: ReactNode; id: string }) {
@@ -42,19 +42,18 @@ export function TextLink({ href, children }: { href: string; children: ReactNode
   );
 }
 
-/** Underlined, with an always-visible new-tab arrow, and the LinkedIn mark on hover. */
+/** Underlined; an arrow chip on hover says it opens in a new tab. */
 export function LinkedInLink({ href, children }: { href: string; children: ReactNode }) {
   const { open, props } = useHoverFocus();
   return (
     <span className="relative inline-block" {...props}>
       <a href={href} target="_blank" rel="noreferrer" className="link text-fg">
         {children}
-        <Icon name="arrow" size={12} className="ml-0.5 inline-block translate-y-px text-fg-3" />
       </a>
       <AnimatePresence>
         {open && (
           <Chip id="chip-linkedin">
-            <LinkedInIcon size={13} />
+            <Icon name="arrow" size={13} />
           </Chip>
         )}
       </AnimatePresence>
