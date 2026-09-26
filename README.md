@@ -27,23 +27,6 @@ the theme blend uses typed CSS custom properties (@property), from this write up
 
 the avatar is exported straight from Figma as an SVG. i removed the background and made the ink follow the theme, but the art itself is untouched.
 
-## run it
-
-```bash
-npm install
-npm run dev
-```
-
-it opens on http://localhost:5173. to make a production build:
-
-```bash
-npm run build
-```
-
-that gives you a static site in `dist/`.
-
-vite is pinned to 6 because the node on my machine is old (21) and newer vite needs 20.19+ or 22.12+. if you're on a newer node you can upgrade it.
-
 ## where things are
 
 ```
