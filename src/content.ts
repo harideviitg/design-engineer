@@ -1,4 +1,7 @@
-// Everything you'd want to edit lives here. All of it is placeholder copy.
+// Everything you'd want to edit lives here. Most of it is still placeholder copy.
+
+// One source for the hero link and the Contact row.
+const linkedin = "https://www.linkedin.com/in/haaridev";
 
 export const site = {
   name: "Haridev",
@@ -12,10 +15,10 @@ export const site = {
   // The art is 15 pixels wide, so multiples of 15 keep every pixel a whole number (75 = 5px each).
   avatar: { width: 96, mobileWidth: 75, alt: "Pixel-art portrait of Haridev" },
 
-  // The hero paragraph. The links in the second line are placeholders until you send real URLs.
+  // The hero paragraph. The "shelf" link is a placeholder until you send its URL.
   intro: "Designing and developing intricate interfaces from a room in IIT Guwahati. I will help your product feel smooth and neat.",
   building: { label: "shelf", href: "#" },
-  linkedin: "https://www.linkedin.com/",
+  linkedin,
 
   work: [
     { title: "Northwind", description: "Design system & component library", year: "2026", href: "#", tone: "#0d99ff" },
@@ -33,7 +36,7 @@ export const site = {
   links: [
     { label: "X", href: "https://x.com/" },
     { label: "GitHub", href: "https://github.com/" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/" },
+    { label: "LinkedIn", href: linkedin },
     { label: "Résumé", href: "#" },
   ],
 };
