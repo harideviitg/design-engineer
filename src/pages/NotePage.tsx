@@ -28,9 +28,7 @@ function Article({ note }: { note: Note }) {
     <>
       <TopBar backTo={paths.notes} backLabel="Notes" />
 
-      <div className="md:grid md:grid-cols-[128px_minmax(0,1fr)] md:gap-x-8">
-        <div className="hidden md:block" />
-
+      <div>
         <article className="min-w-0">
           <header>
             <p className="font-mono text-[12px] uppercase leading-4 text-fg-3">

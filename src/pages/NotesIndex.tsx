@@ -15,8 +15,7 @@ export function NotesIndex() {
     <>
       <TopBar backTo={paths.home} backLabel="Home" />
 
-      <div className="md:grid md:grid-cols-[128px_minmax(0,1fr)] md:gap-x-8">
-        <div className="hidden md:block" />
+      <div>
         <div className="min-w-0">
           <h1 data-measure="text" className="w-fit text-[28px] font-medium leading-9 tracking-[-0.02em] text-fg">
             Notes
