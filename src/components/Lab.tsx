@@ -1,7 +1,6 @@
-import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { EASE_OUT } from "../lib/hooks";
-import { Icon } from "./icons";
+import { motion } from "motion/react";
+import { useRef, useState, type ReactNode } from "react";
+import { BacteriaMap } from "./BacteriaMap";
 import LatticeLoader, { type LatticeStatus } from "./LatticeLoader";
 
 /* Each card is a slot. Swap the demo for any component you want to show off. */
@@ -11,8 +10,8 @@ export function LabGrid() {
       <LabCard title="Lattice loader" tag="css">
         <LatticeDemo />
       </LabCard>
-      <LabCard title="Copy command" tag="motion">
-        <CopyCommand />
+      <LabCard title="Juicy nodes" tag="ts">
+        <BacteriaMap />
       </LabCard>
       <LabCard title="Stretch toggle" tag="spring">
         <StretchToggle />
@@ -50,50 +49,6 @@ function LatticeDemo() {
         className="rounded-lg px-3 py-2 text-fg transition-transform duration-150 ease-out active:scale-[0.97]"
       >
         <LatticeLoader status={status} pattern="orbit" label="Thinking" />
-      </button>
-    </div>
-  );
-}
-
-/* ——— 02 · Copy command: icon morph with blur, Emil-style ——— */
-
-function CopyCommand() {
-  const [copied, setCopied] = useState(false);
-  const timer = useRef(0);
-  useEffect(() => () => window.clearTimeout(timer.current), []);
-  const command = "npx create-portfolio";
-
-  const copy = () => {
-    navigator.clipboard?.writeText(command).catch(() => {});
-    setCopied(true);
-    window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setCopied(false), 1500);
-  };
-
-  return (
-    <div className="absolute inset-0 grid place-items-center">
-      <button
-        type="button"
-        onClick={copy}
-        className="flex items-center gap-3 rounded-lg border border-line bg-bg py-1.5 pl-3 pr-1.5 font-mono text-[12px] uppercase text-fg-2 shadow-[0_1px_2px_rgb(0_0_0/0.04)] transition-transform duration-150 ease-out active:scale-[0.97]"
-      >
-        <span>
-          <span className="text-fg-3">$</span> {command}
-        </span>
-        <span className="relative grid size-6 place-items-center rounded-md bg-bg-2 text-fg">
-          <AnimatePresence initial={false} mode="popLayout">
-            <motion.span
-              key={copied ? "check" : "copy"}
-              className="grid"
-              initial={{ opacity: 0, scale: 0.4, filter: "blur(4px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, scale: 0.4, filter: "blur(4px)" }}
-              transition={{ duration: 0.2, ease: EASE_OUT }}
-            >
-              <Icon name={copied ? "check" : "copy"} size={13} />
-            </motion.span>
-          </AnimatePresence>
-        </span>
       </button>
     </div>
   );

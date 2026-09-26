@@ -16,15 +16,15 @@ export const site = {
   avatar: { width: 96, mobileWidth: 75, alt: "Pixel-art portrait of Haridev" },
 
   // The hero paragraph. The "shelf" link is a placeholder until you send its URL.
-  intro: "Designing and developing intricate interfaces from a room in IIT Guwahati. I will help your product feel smooth and neat.",
+  intro: "Designing and developing intricate interfaces from a room in IIT Guwahati. I will help you build clean scalable products from scratch.",
   building: { label: "shelf", href: "#" },
   linkedin,
 
   work: [
-    { title: "Northwind", description: "Design system & component library", year: "2026", href: "#", tone: "#0d99ff" },
-    { title: "Parcel", description: "Motion language for a logistics app", year: "2025", href: "#", tone: "#f24822" },
-    { title: "Orbit", description: "Onboarding redesign, +18% activation", year: "2025", href: "#", tone: "#14ae5c" },
-    { title: "Lintel", description: "Design QA plugin for Figma", year: "2024", href: "#", tone: "#9747ff" },
+    { title: "Shelf", description: "Shipped product and iOS native design system", year: "2026", href: "#", tone: "#0d99ff" },
+    { title: "Nomnom", description: "User research and systems thinking", year: "2026", href: "#", tone: "#f24822" },
+    { title: "Mindmap", description: "How my brain stores information", year: "2026", href: "#", tone: "#14ae5c" },
+    { title: "Abacor", description: "Product illustrations for AI SaaS", year: "2026", href: "#", tone: "#9747ff" },
   ],
 
   experience: [
