@@ -42,7 +42,7 @@ src/lib/theme.ts      theme handling
 src/lib/router.ts     tiny hash router, so it works on github pages
 ```
 
-to change the avatar size, edit `avatar.width` in `src/content.ts`. it only ever scales evenly, it never stretches.
+to change the avatar size, edit `avatar.width` (desktop) and `avatar.mobileWidth` (phone) in `src/content.ts`. it only ever scales evenly, it never stretches.
 
 ## made with
 

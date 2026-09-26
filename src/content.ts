@@ -8,8 +8,9 @@ export const site = {
   updated: "Sep 2026",
 
   // The art itself is src/assets/avatar.svg (exported from Figma, background removed).
-  // `width` is the only thing to tune: it scales uniformly, never stretches.
-  avatar: { width: 96, alt: "Pixel-art portrait of Haridev" },
+  // Sizes are the only thing to tune: the art scales uniformly, never stretches.
+  // The art is 15 pixels wide, so multiples of 15 keep every pixel a whole number (75 = 5px each).
+  avatar: { width: 96, mobileWidth: 75, alt: "Pixel-art portrait of Haridev" },
 
   intro: [
     "I design in code and sweat the details — easing curves, optical alignment, the 1px nobody asked about.",

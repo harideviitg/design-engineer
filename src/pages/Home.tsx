@@ -6,13 +6,15 @@ import { ExperienceList, LinkRow, NotesList, WorkList } from "../components/List
 import { LocalTime } from "../components/LocalTime";
 import { Reveal, Rich, Section } from "../components/Section";
 import { ThemeToggle } from "../components/ThemeToggle";
+import { useMediaQuery } from "../lib/hooks";
 import { sortedNotes } from "../notes";
 
 export function Home({ columnRef }: { columnRef: React.RefObject<HTMLElement | null> }) {
+  const wide = useMediaQuery("(min-width: 768px)");
   return (
     <>
       <header className="relative grid grid-cols-1 gap-5 md:grid-cols-[128px_minmax(0,1fr)] md:items-center md:gap-x-8">
-        <Avatar width={site.avatar.width} alt={site.avatar.alt} />
+        <Avatar width={wide ? site.avatar.width : site.avatar.mobileWidth} alt={site.avatar.alt} />
         <Reveal delay={0.25} className="flex flex-col">
           <h1 data-measure="text" className="w-fit font-medium text-fg">
             {site.name}
