@@ -4,7 +4,8 @@ import { CopyEmail } from "../components/CopyEmail";
 import { LabGrid } from "../components/Lab";
 import { ExperienceList, LinkRow, NotesList, WorkList } from "../components/Lists";
 import { LocalTime } from "../components/LocalTime";
-import { Reveal, Rich, Section } from "../components/Section";
+import { EmailLink, LinkedInLink, TextLink } from "../components/InlineLinks";
+import { Reveal, Section } from "../components/Section";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { useMediaQuery } from "../lib/hooks";
 import { sortedNotes } from "../notes";
@@ -34,11 +35,11 @@ export function Home({ columnRef }: { columnRef: React.RefObject<HTMLElement | n
       <div className="mt-16 flex flex-col gap-14 md:mt-20 md:gap-16">
         <Section label="Now" delay={0.45}>
           <div className="space-y-3 text-fg-2">
-            {site.intro.map((p) => (
-              <p key={p} data-measure="text">
-                <Rich text={p} />
-              </p>
-            ))}
+            <p data-measure="text">{site.intro}</p>
+            <p data-measure="text">
+              Currently building <TextLink href={site.building.href}>{site.building.label}</TextLink>. Talk to me through{" "}
+              <LinkedInLink href={site.linkedin}>linkedin</LinkedInLink> or <EmailLink email={site.email}>email</EmailLink>.
+            </p>
           </div>
         </Section>
 

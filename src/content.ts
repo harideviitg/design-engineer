@@ -4,7 +4,7 @@ export const site = {
   name: "Haridev",
   role: "Design Engineer",
   location: { label: "India", timeZone: "Asia/Kolkata", tz: "IST" },
-  email: "hello@example.com",
+  email: "r.haridev@iitg.ac.in",
   updated: "Sep 2026",
 
   // The art itself is src/assets/avatar.svg (exported from Figma, background removed).
@@ -12,10 +12,10 @@ export const site = {
   // The art is 15 pixels wide, so multiples of 15 keep every pixel a whole number (75 = 5px each).
   avatar: { width: 96, mobileWidth: 75, alt: "Pixel-art portrait of Haridev" },
 
-  intro: [
-    "I design in code and sweat the details — easing curves, optical alignment, the 1px nobody asked about.",
-    "Currently building the product at [Acme](#). Before that, interfaces and design systems at [Studio](#).",
-  ],
+  // The hero paragraph. The links in the second line are placeholders until you send real URLs.
+  intro: "Designing and developing intricate interfaces from a room in IIT Guwahati. I will help your product feel smooth and neat.",
+  building: { label: "shelf", href: "#" },
+  linkedin: "https://www.linkedin.com/",
 
   work: [
     { title: "Northwind", description: "Design system & component library", year: "2026", href: "#", tone: "#0d99ff" },
