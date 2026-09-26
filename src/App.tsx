@@ -10,7 +10,6 @@ import { routeKey, useRoute, useScrollMemory } from "./lib/router";
 import { getNote } from "./notes";
 import { Home } from "./pages/Home";
 import { NotePage } from "./pages/NotePage";
-import { NotesIndex } from "./pages/NotesIndex";
 
 const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 
@@ -28,8 +27,7 @@ export default function App() {
 
   useEffect(() => {
     const base = `${site.name} — ${site.role}`;
-    if (route.name === "notes") document.title = `Notes — ${site.name}`;
-    else if (route.name === "note") document.title = `${getNote(route.slug)?.title ?? "Note"} — ${site.name}`;
+    if (route.name === "note") document.title = `${getNote(route.slug)?.title ?? "Note"} — ${site.name}`;
     else document.title = base;
   }, [route]);
 
@@ -47,7 +45,6 @@ export default function App() {
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
             {route.name === "home" && <Home columnRef={columnRef} />}
-            {route.name === "notes" && <NotesIndex />}
             {route.name === "note" && <NotePage slug={route.slug} />}
           </motion.div>
 

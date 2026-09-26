@@ -155,7 +155,7 @@ function Thumb({ tone }: { tone: string }) {
   );
 }
 
-export function NotesList({ items, showCategory = false }: { items: Note[]; showCategory?: boolean }) {
+export function NotesList({ items }: { items: Note[] }) {
   const [active, setActive] = useState<string | null>(null);
   const id = useId();
   return (
@@ -171,10 +171,7 @@ export function NotesList({ items, showCategory = false }: { items: Note[]; show
           className="group relative flex items-baseline gap-4 rounded-lg px-3 py-2"
         >
           <Highlight show={active === it.slug} id={id} />
-          <span className="relative min-w-0">
-            <span className="text-fg">{it.title}</span>
-            {showCategory && <span className="text-fg-2"> {it.category}</span>}
-          </span>
+          <span className="relative min-w-0 text-fg">{it.title}</span>
           <span className="relative ml-auto shrink-0 text-[13px] leading-4 tabular-nums text-fg-3">
             {formatDate(it.date, "short")}
           </span>

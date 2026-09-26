@@ -113,7 +113,6 @@ export const notes: Note[] = [
 // ——— helpers ———
 
 export const sortedNotes = [...notes].sort((a, b) => b.date.localeCompare(a.date));
-export const categories = ["All", ...Array.from(new Set(sortedNotes.map((n) => n.category)))];
 
 export const getNote = (slug: string) => sortedNotes.find((n) => n.slug === slug);
 

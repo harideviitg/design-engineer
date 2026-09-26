@@ -1,13 +1,11 @@
 import { site } from "../content";
 import { Avatar } from "../components/Avatar";
 import { CopyEmail } from "../components/CopyEmail";
-import { Icon } from "../components/icons";
 import { LabGrid } from "../components/Lab";
 import { ExperienceList, LinkRow, NotesList, WorkList } from "../components/Lists";
 import { LocalTime } from "../components/LocalTime";
 import { Reveal, Rich, Section } from "../components/Section";
 import { ThemeToggle } from "../components/ThemeToggle";
-import { paths } from "../lib/router";
 import { sortedNotes } from "../notes";
 
 export function Home({ columnRef }: { columnRef: React.RefObject<HTMLElement | null> }) {
@@ -51,19 +49,7 @@ export function Home({ columnRef }: { columnRef: React.RefObject<HTMLElement | n
         </Section>
 
         <Section label="Notes">
-          <NotesList items={sortedNotes.slice(0, 4)} />
-          <a
-            href={paths.notes}
-            data-measure="text"
-            className="group mt-2 inline-flex items-center gap-1 text-fg-2 transition-colors duration-150 hover:text-fg"
-          >
-            All notes
-            <Icon
-              name="arrow"
-              size={12}
-              className="-translate-x-0.5 translate-y-0.5 opacity-0 transition-[opacity,transform] duration-200 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
-            />
-          </a>
+          <NotesList items={sortedNotes} />
         </Section>
 
         <Section label="Experience">

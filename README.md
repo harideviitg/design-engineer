@@ -11,7 +11,7 @@ it's still full of placeholder copy for now (fake projects, fake writing, fake j
 - my avatar is my own pixel art. hover it and a small spot around the cursor turns into 0s and 1s depending on the colour of each pixel (dark is 1, light is 0). move away and it goes back exactly to the original
 - light and dark mode. it follows your device by default, and the toggle blends the colours instead of snapping
 - the Work list has a hover highlight that glides between rows, and a preview card on wide screens
-- a Notes section for my writing, with its own list page and a page for every note. layout is borrowed from how emilkowal.ski and chloemaillot.fr do theirs, but built my way: a quiet back arrow (Esc works too) and category filters. going back puts you exactly where you were on the page before
+- a Notes section for my writing, listed on the home page with a page for every note. layout is borrowed from how emilkowal.ski and chloemaillot.fr do theirs, but built my way, with a quiet back arrow (Esc works too). going back puts you exactly where you were on the page before
 - a Lab section with a few small components (hold to confirm, copy button, stretch toggle, tick slider) that i'll keep adding to
 - click to copy email, a live clock with the time difference from you on hover
 
@@ -33,7 +33,7 @@ the avatar is exported straight from Figma as an SVG. i removed the background a
 ```
 src/content.ts        all the text (name, intro, work, writing, experience, links)
 src/notes.ts          all the notes (a note is just data, add one by adding an object)
-src/pages/            home, notes list, single note
+src/pages/            home and a single note
 src/assets/avatar.svg the avatar
 src/components/       rulers, inspector, avatar, lists, lab, etc
 src/lib/binary.ts     the 0/1 hover effect

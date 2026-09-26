@@ -5,18 +5,16 @@ import { measure } from "./measure";
  * A tiny hash router. GitHub Pages can't rewrite unknown paths to index.html,
  * so #/notes/some-note works everywhere with no server config.
  */
-export type Route = { name: "home" } | { name: "notes" } | { name: "note"; slug: string };
+export type Route = { name: "home" } | { name: "note"; slug: string };
 
 export const paths = {
   home: "#/",
-  notes: "#/notes",
   note: (slug: string) => `#/notes/${slug}`,
 };
 
 export function parseRoute(hash: string): Route {
   const [a, b] = hash.replace(/^#\/?/, "").split("/");
   if (a === "notes" && b) return { name: "note", slug: decodeURIComponent(b) };
-  if (a === "notes") return { name: "notes" };
   return { name: "home" };
 }
 
