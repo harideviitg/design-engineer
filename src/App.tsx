@@ -36,7 +36,7 @@ export default function App() {
       {tools && <Rulers originRef={columnRef} />}
       {tools && <Inspector columnRef={columnRef} />}
 
-      <main className="px-5 pb-16 pt-16 md:px-10 md:pb-24 md:pt-32">
+      <main className="px-5 pb-16 pt-10 md:px-10 md:pb-24 md:pt-32">
         <div ref={columnRef} className="relative mx-auto w-full max-w-[640px]">
           <motion.div
             key={key}
