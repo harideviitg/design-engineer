@@ -2,13 +2,14 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { EASE_OUT } from "../lib/hooks";
 import { Icon } from "./icons";
+import LatticeLoader, { type LatticeStatus } from "./LatticeLoader";
 
 /* Each card is a slot. Swap the demo for any component you want to show off. */
 export function LabGrid() {
   return (
     <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
-      <LabCard title="Hold to confirm" tag="clip-path">
-        <HoldToConfirm />
+      <LabCard title="Lattice loader" tag="css">
+        <LatticeDemo />
       </LabCard>
       <LabCard title="Copy command" tag="motion">
         <CopyCommand />
@@ -35,66 +36,20 @@ function LabCard({ title, tag, children }: { title: string; tag: string; childre
   );
 }
 
-/* ——— 01 · Hold to confirm: the fill is a clip-path that only commits if you hold on ——— */
+/* ——— 01 · Lattice loader: click it to finish, fail, or start over ——— */
 
-const HOLD_MS = 1200;
-
-function HoldToConfirm() {
-  const [holding, setHolding] = useState(false);
-  const [done, setDone] = useState(false);
-  const timer = useRef(0);
-  useEffect(() => () => window.clearTimeout(timer.current), []);
-
-  const start = () => {
-    if (done || holding) return;
-    setHolding(true);
-    timer.current = window.setTimeout(() => {
-      setHolding(false);
-      setDone(true);
-      timer.current = window.setTimeout(() => setDone(false), 1600);
-    }, HOLD_MS);
-  };
-  const cancel = () => {
-    if (!holding) return;
-    window.clearTimeout(timer.current);
-    setHolding(false);
-  };
-
-  const filled = holding || done;
-
+function LatticeDemo() {
+  const [status, setStatus] = useState<LatticeStatus>("working");
+  const next = () => setStatus((s) => (s === "working" ? "done" : s === "done" ? "error" : "working"));
   return (
     <div className="absolute inset-0 grid place-items-center">
       <button
         type="button"
-        onPointerDown={start}
-        onPointerUp={cancel}
-        onPointerLeave={cancel}
-        onKeyDown={(e) => {
-          if ((e.key === " " || e.key === "Enter") && !e.repeat) {
-            e.preventDefault();
-            start();
-          }
-        }}
-        onKeyUp={(e) => (e.key === " " || e.key === "Enter") && cancel()}
-        className="relative h-9 touch-none select-none overflow-hidden rounded-full border border-line bg-bg px-4 text-[13px] font-medium text-fg-2 transition-transform duration-150 ease-out active:scale-[0.97]"
+        onClick={next}
+        aria-label="Change the loader state"
+        className="rounded-lg px-3 py-2 text-fg transition-transform duration-150 ease-out active:scale-[0.97]"
       >
-        <span>Hold to confirm</span>
-        <span
-          aria-hidden
-          className="absolute inset-0 flex items-center justify-center gap-1.5 bg-fg text-bg"
-          style={{
-            clipPath: filled ? "inset(0 0 0 0)" : "inset(0 100% 0 0)",
-            transition: holding
-              ? `clip-path ${HOLD_MS}ms linear`
-              : "clip-path 240ms cubic-bezier(0.23, 1, 0.32, 1)",
-          }}
-        >
-          {done && <Icon name="check" size={13} />}
-          {done ? "Confirmed" : "Hold to confirm"}
-        </span>
-        <span className="sr-only" aria-live="polite">
-          {done ? "Confirmed" : ""}
-        </span>
+        <LatticeLoader status={status} pattern="orbit" label="Thinking" />
       </button>
     </div>
   );
