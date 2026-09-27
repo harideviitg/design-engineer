@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="en">
+<!-- Dark by default for everyone, whatever the device says; the toggle switches it for the visit -->
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>haridev design engineer</title>
     <meta name="description" content="Haridev is a design engineer who designs in code and sweats the details." />
-    <meta name="theme-color" content="#fbfbfa" />
+    <meta name="theme-color" content="#111110" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Geist + Geist Mono (SIL OFL) -->
@@ -15,15 +16,6 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&family=Geist+Mono:wght@400;500&display=swap"
     />
-
-    <!-- The device theme is the default; set it before first paint so there's no flash -->
-    <script>
-      (function () {
-        var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        document.documentElement.dataset.theme = dark ? "dark" : "light";
-        document.querySelector('meta[name="theme-color"]').setAttribute("content", dark ? "#111110" : "#fbfbfa");
-      })();
-    </script>
   </head>
   <body>
     <div id="root"></div>

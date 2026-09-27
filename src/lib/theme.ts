@@ -4,7 +4,6 @@ export type Theme = "light" | "dark";
 
 const listeners = new Set<() => void>();
 const read = (): Theme => (document.documentElement.dataset.theme === "dark" ? "dark" : "light");
-const system = window.matchMedia("(prefers-color-scheme: dark)");
 
 export function useTheme() {
   return useSyncExternalStore(
@@ -27,8 +26,6 @@ function apply(next: Theme) {
   listeners.forEach((l) => l());
 }
 
-// The device decides. A click only overrides it until the page reloads
-// or the system theme changes again. The colour blend itself lives in index.css.
-system.addEventListener("change", (e) => apply(e.matches ? "dark" : "light"));
-
+// Every visit starts dark (set on <html> in index.html), whatever the device theme is.
+// A click switches it until the page reloads. The colour blend itself lives in index.css.
 export const toggleTheme = () => apply(read() === "dark" ? "light" : "dark");

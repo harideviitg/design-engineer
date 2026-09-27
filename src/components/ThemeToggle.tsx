@@ -24,7 +24,8 @@ export function ThemeToggle() {
           exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
           transition={{ duration: 0.3, ease: EASE_OUT }}
         >
-          <Icon name={dark ? "moon" : "sun"} size={16} />
+          {/* shows where a click takes you: the sun in dark mode, the moon in light */}
+          <Icon name={dark ? "sun" : "moon"} size={16} />
         </motion.span>
       </AnimatePresence>
     </button>
