@@ -38,7 +38,12 @@ export function Avatar({ width, alt }: { width: number; alt: string }) {
 
     const readPalette = (): Palette => {
       const cs = getComputedStyle(root);
-      return { ink: cs.color, one: cs.getPropertyValue("--fg").trim(), zero: cs.getPropertyValue("--fg-3").trim() };
+      return {
+        ink: cs.color,
+        skin: cs.getPropertyValue("--avatar-skin").trim(),
+        one: cs.getPropertyValue("--fg").trim(),
+        zero: cs.getPropertyValue("--fg-3").trim(),
+      };
     };
     const local = (e: PointerEvent) => {
       const r = root.getBoundingClientRect();

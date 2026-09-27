@@ -16,6 +16,7 @@
 @property --ruler-bg { syntax: "<color>"; inherits: true; initial-value: #fbfbfa; }
 @property --ruler-tick { syntax: "<color>"; inherits: true; initial-value: #cfcfca; }
 @property --avatar-ink { syntax: "<color>"; inherits: true; initial-value: #000; }
+@property --avatar-skin { syntax: "<color>"; inherits: true; initial-value: #ebebe9; }
 
 :root {
   --bg: #fbfbfa;
@@ -30,7 +31,8 @@
   --red: #f24822; /* Figma redline */
   --ruler-bg: #fbfbfa;
   --ruler-tick: #cfcfca;
-  --avatar-ink: #000;
+  --avatar-ink: #171716; /* a touch off pure black */
+  --avatar-skin: #ebebe9;
   color-scheme: light;
 }
 
@@ -48,7 +50,8 @@
       --red 380ms ease,
       --ruler-bg 380ms ease,
       --ruler-tick 380ms ease,
-      --avatar-ink 380ms ease;
+      --avatar-ink 380ms ease,
+      --avatar-skin 380ms ease;
   }
 }
 
@@ -65,7 +68,8 @@
   --red: #ff5a36;
   --ruler-bg: #111110;
   --ruler-tick: #3a3a37;
-  --avatar-ink: #232321; /* black would vanish into the page */
+  --avatar-ink: #000;
+  --avatar-skin: #c7c7c2; /* a step greyer than the light-mode tone, so it reads against the dark bg */
   color-scheme: dark;
 }
 

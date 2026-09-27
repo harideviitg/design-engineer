@@ -5,12 +5,15 @@
  * art exactly, so there is no swap or pop between the resting and hovered states.
  */
 
-// The SVG is rasterised with its ink swapped for this sentinel so the live theme colour
-// can be painted in later (and blend along with the page).
+// The SVG is rasterised with its ink and skin tone swapped for these sentinels so the live theme
+// colours can be painted in later (and blend along with the page).
 const INK_SENTINEL = "rgb(1 2 3)";
-// The art's other two colours (see src/assets/avatar.svg): the white face and the light skin tone.
+const SKIN_SENTINEL = "rgb(4 5 6)";
+// A stand-in for var(--avatar-skin) while rasterising: a mid grey, safely bucketed as "skin" below
+// (not dark enough to read as ink, not light enough to read as white).
+const SKIN_MARKER = "#808080";
+// The art's other colour (see src/assets/avatar.svg): the white face.
 const WHITE = "rgb(255 255 255)";
-const SKIN = "rgb(235 235 233)";
 
 export type Cells = {
   n: number;
@@ -26,6 +29,7 @@ export async function buildCells(svgText: string, cols: number, rows: number): P
   const S = 8; // raster oversample per cell
   const sized = svgText
     .replaceAll("currentColor", "#010203")
+    .replaceAll("var(--avatar-skin)", SKIN_MARKER)
     .replace(/^<svg\s+width="[^"]*"\s+height="[^"]*"/, `<svg width="${cols * S}" height="${rows * S}" preserveAspectRatio="none"`);
   const url = URL.createObjectURL(new Blob([sized], { type: "image/svg+xml" }));
   try {
@@ -72,7 +76,7 @@ export async function buildCells(svgText: string, cols: number, rows: number): P
         const kind = votes.indexOf(Math.max(...votes));
         ci.push(i);
         cj.push(j);
-        color.push(kind === 0 ? INK_SENTINEL : kind === 2 ? WHITE : SKIN);
+        color.push(kind === 0 ? INK_SENTINEL : kind === 2 ? WHITE : SKIN_SENTINEL);
         isInk.push(kind === 0 ? 1 : 0);
       }
     return { n: ci.length, cols, rows, ci: Uint16Array.from(ci), cj: Uint16Array.from(cj), color, isInk: Uint8Array.from(isInk) };
@@ -81,7 +85,7 @@ export async function buildCells(svgText: string, cols: number, rows: number): P
   }
 }
 
-export type Palette = { ink: string; one: string; zero: string };
+export type Palette = { ink: string; skin: string; one: string; zero: string };
 
 const RADIUS = 20; // CSS px the cursor reaches
 const EDGE = 8; // soft falloff at the rim, so the spot has no hard border
@@ -206,7 +210,7 @@ export class BinarySim {
 
       if (t < 1) {
         ctx.globalAlpha = 1 - smooth(t);
-        ctx.fillStyle = d.isInk[i] ? palette.ink : d.color[i];
+        ctx.fillStyle = d.isInk[i] ? palette.ink : d.color[i] === SKIN_SENTINEL ? palette.skin : d.color[i];
         ctx.fillRect(x0, y0, w, h);
       }
       if (t > 0) {
