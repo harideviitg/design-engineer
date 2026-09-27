@@ -10,10 +10,10 @@ export const site = {
   email: "r.haridev@iitg.ac.in",
   updated: "Sep 2026",
 
-  // The art itself is src/assets/avatar.svg (exported from Figma, background removed).
-  // Sizes are the only thing to tune: the art scales uniformly, never stretches.
-  // The art is 15 pixels wide, so multiples of 15 keep every pixel a whole number (75 = 5px each).
-  avatar: { width: 96, mobileWidth: 75, alt: "Pixel-art portrait of Haridev" },
+  // The portrait is typed out in Geist Mono bits (src/components/Avatar.tsx).
+  // Sizes are font sizes; the art is drawn in em, so it scales without changing shape.
+  // Figma draws it at 12px (about 151px wide); width is 12.6 × the size, so 7px ≈ 88px, 6px ≈ 76px.
+  avatar: { size: 7, mobileSize: 6, alt: "Portrait of Haridev in ones and zeros" },
 
   // The hero paragraph. The "shelf" link is a placeholder until you send its URL.
   intro: "Designing and developing intricate interfaces from a room in IIT Guwahati. I will help you build clean scalable products from scratch.",

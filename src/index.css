@@ -15,8 +15,8 @@
 @property --red { syntax: "<color>"; inherits: true; initial-value: #f24822; }
 @property --ruler-bg { syntax: "<color>"; inherits: true; initial-value: #fbfbfa; }
 @property --ruler-tick { syntax: "<color>"; inherits: true; initial-value: #cfcfca; }
-@property --avatar-ink { syntax: "<color>"; inherits: true; initial-value: #000; }
-@property --avatar-skin { syntax: "<color>"; inherits: true; initial-value: #ebebe9; }
+@property --avatar-one { syntax: "<color>"; inherits: true; initial-value: #0b0b0b; }
+@property --avatar-zero { syntax: "<color>"; inherits: true; initial-value: #fff; }
 
 :root {
   --bg: #fbfbfa;
@@ -31,8 +31,8 @@
   --red: #f24822; /* Figma redline */
   --ruler-bg: #fbfbfa;
   --ruler-tick: #cfcfca;
-  --avatar-ink: #171716; /* a touch off pure black */
-  --avatar-skin: #ebebe9;
+  --avatar-one: #0b0b0b; /* bit portrait: the 1s (hair) */
+  --avatar-zero: #fff; /* bit portrait: the 0s (face) */
   color-scheme: light;
 }
 
@@ -50,8 +50,8 @@
       --red 380ms ease,
       --ruler-bg 380ms ease,
       --ruler-tick 380ms ease,
-      --avatar-ink 380ms ease,
-      --avatar-skin 380ms ease;
+      --avatar-one 380ms ease,
+      --avatar-zero 380ms ease;
   }
 }
 
@@ -68,8 +68,8 @@
   --red: #ff5a36;
   --ruler-bg: #111110;
   --ruler-tick: #3a3a37;
-  --avatar-ink: #000;
-  --avatar-skin: #c7c7c2; /* a step greyer than the light-mode tone, so it reads against the dark bg */
+  --avatar-one: #6e6e6e;
+  --avatar-zero: #fff;
   color-scheme: dark;
 }
 
@@ -133,6 +133,24 @@
     color: var(--fg);
     text-decoration-color: currentColor;
   }
+}
+
+/* Bit portrait: each bit draws its current digit (data-b), coloured by what it really is (data-v).
+   Inline-block so it can drift; it keeps its exact spot in the row at rest. */
+.bit {
+  display: inline-block;
+}
+.bit::before {
+  content: attr(data-b);
+}
+.bit[data-v="1"] {
+  color: var(--avatar-one);
+}
+.bit[data-v="0"] {
+  color: var(--avatar-zero);
+}
+.bit[data-g] {
+  opacity: 0.35;
 }
 
 /* Measure mode */

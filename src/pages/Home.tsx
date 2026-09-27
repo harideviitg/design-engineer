@@ -15,7 +15,7 @@ export function Home({ columnRef }: { columnRef: React.RefObject<HTMLElement | n
   return (
     <>
       <header className="relative grid grid-cols-1 gap-5 md:grid-cols-[128px_minmax(0,1fr)] md:items-center md:gap-x-8">
-        <Avatar width={wide ? site.avatar.width : site.avatar.mobileWidth} alt={site.avatar.alt} />
+        <Avatar size={wide ? site.avatar.size : site.avatar.mobileSize} alt={site.avatar.alt} />
         <Reveal delay={0.25} className="flex flex-col">
           <h1 data-measure="text" className="w-fit font-medium text-fg">
             {site.name}
